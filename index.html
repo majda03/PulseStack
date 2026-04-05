@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulseStack Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader-box">
+      <div class="loader-logo">
+        <span class="logo-dot"></span>
+        <span>PulseStack</span>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-progress" id="loaderProgress"></div>
+      </div>
+      <p class="loader-text" id="loaderText">Initializing analytics engine...</p>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon"></div>
+        <div>
+          <h2>PulseStack</h2>
+          <p>Analytics OS</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-link active">
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-link">
+          <span>Campaigns</span>
+        </button>
+        <button class="nav-link">
+          <span>Audience</span>
+        </button>
+        <button class="nav-link">
+          <span>Reports</span>
+        </button>
+        <button class="nav-link">
+          <span>Automations</span>
+        </button>
+        <button class="nav-link">
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-card">
+        <p class="sidebar-card-label">AI Assist</p>
+        <h3>Weekly Insight Pack</h3>
+        <p class="sidebar-card-text">
+          Automatically generate a performance summary for your clients.
+        </p>
+        <button class="primary-btn small-btn" id="openModalBtn">New Report</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle">☰</button>
+          <div>
+            <p class="eyebrow">Portfolio Case Study</p>
+            <h1>Analytics Dashboard</h1>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="search-box">
+            <input type="text" placeholder="Search reports, metrics..." />
+          </div>
+          <button class="ghost-btn">Export</button>
+          <button class="primary-btn" id="openModalBtnTwo">Create</button>
+          <div class="user-box">
+            <div class="avatar">MK</div>
+            <div>
+              <strong>Majda K.</strong>
+              <p>Frontend Developer</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero-panel fade-up">
+        <div class="hero-copy">
+          <p class="eyebrow">Performance Overview</p>
+          <h2>Track growth, engagement, and conversion in one clean system.</h2>
+          <p class="hero-text">
+            A polished dark-mode analytics dashboard concept designed to feel like a real SaaS product for modern teams.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-btn">View Report</button>
+            <button class="ghost-btn">Share Dashboard</button>
+          </div>
+        </div>
+
+        <div class="hero-badge-card">
+          <p>Live Revenue</p>
+          <h3>$<span class="counter" data-target="48290">0</span></h3>
+          <div class="trend positive">+12.8% this month</div>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card fade-up delay-1">
+          <div class="stat-top">
+            <p>Total Visitors</p>
+            <span class="pill positive">+18%</span>
+          </div>
+          <h3><span class="counter" data-target="128430">0</span></h3>
+          <p class="muted">Compared to last 30 days</p>
+        </article>
+
+        <article class="stat-card fade-up delay-2">
+          <div class="stat-top">
+            <p>Conversion Rate</p>
+            <span class="pill positive">+3.2%</span>
+          </div>
+          <h3><span class="counter" data-target="6.4">0</span>%</h3>
+          <p class="muted">Lead to paid signup</p>
+        </article>
+
+        <article class="stat-card fade-up delay-3">
+          <div class="stat-top">
+            <p>MRR</p>
+            <span class="pill positive">+9%</span>
+          </div>
+          <h3>$<span class="counter" data-target="19240">0</span></h3>
+          <p class="muted">Monthly recurring revenue</p>
+        </article>
+
+        <article class="stat-card fade-up delay-4">
+          <div class="stat-top">
+            <p>Churn Risk</p>
+            <span class="pill negative">-1.1%</span>
+          </div>
+          <h3><span class="counter" data-target="2.1">0</span>%</h3>
+          <p class="muted">Improved retention trend</p>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel chart-panel large-panel fade-up">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Main Chart</p>
+              <h3>Revenue & Engagement</h3>
+            </div>
+            <div class="panel-actions">
+              <button class="tag-btn active" data-range="30">30D</button>
+              <button class="tag-btn" data-range="90">90D</button>
+              <button class="tag-btn" data-range="365">1Y</button>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="lineChart" width="900" height="320"></canvas>
+          </div>
+        </article>
+
+        <article class="panel donut-panel fade-up delay-1">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Traffic Split</p>
+              <h3>Source Mix</h3>
+            </div>
+          </div>
+
+          <div class="donut-wrap">
+            <div class="donut-chart">
+              <div class="donut-inner">
+                <strong>78%</strong>
+                <span>Retention</span>
+              </div>
+            </div>
+
+            <div class="legend">
+              <div><span class="legend-dot dot-1"></span> Organic Search</div>
+              <div><span class="legend-dot dot-2"></span> Social Media</div>
+              <div><span class="legend-dot dot-3"></span> Paid Ads</div>
+              <div><span class="legend-dot dot-4"></span> Referral</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel activity-panel fade-up delay-2">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Realtime</p>
+              <h3>Activity Feed</h3>
+            </div>
+          </div>
+
+          <ul class="activity-list">
+            <li>
+              <span class="activity-dot"></span>
+              <div>
+                <strong>New client onboarded</strong>
+                <p>Northstar Studio upgraded to Pro plan</p>
+              </div>
+              <time>2m ago</time>
+            </li>
+            <li>
+              <span class="activity-dot"></span>
+              <div>
+                <strong>Campaign spike detected</strong>
+                <p>Instagram CTR increased by 14%</p>
+              </div>
+              <time>18m ago</time>
+            </li>
+            <li>
+              <span class="activity-dot"></span>
+              <div>
+                <strong>Automation completed</strong>
+                <p>Weekly PDF report sent successfully</p>
+              </div>
+              <time>43m ago</time>
+            </li>
+            <li>
+              <span class="activity-dot"></span>
+              <div>
+                <strong>Conversion alert</strong>
+                <p>Landing page reached new goal threshold</p>
+              </div>
+              <time>1h ago</time>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="panel table-panel fade-up">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Recent Clients</p>
+            <h3>Account Performance</h3>
+          </div>
+          <button class="ghost-btn small-btn">View All</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Plan</th>
+                <th>Revenue</th>
+                <th>Growth</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Northstar Studio</td>
+                <td>Pro</td>
+                <td>$4,920</td>
+                <td class="positive-text">+18.2%</td>
+                <td><span class="status status-live">Active</span></td>
+              </tr>
+              <tr>
+                <td>Velora Beauty</td>
+                <td>Business</td>
+                <td>$3,180</td>
+                <td class="positive-text">+9.4%</td>
+                <td><span class="status status-live">Active</span></td>
+              </tr>
+              <tr>
+                <td>Apex Motion</td>
+                <td>Starter</td>
+                <td>$1,240</td>
+                <td class="negative-text">-2.1%</td>
+                <td><span class="status status-review">Review</span></td>
+              </tr>
+              <tr>
+                <td>Nova Commerce</td>
+                <td>Business</td>
+                <td>$5,760</td>
+                <td class="positive-text">+24.7%</td>
+                <td><span class="status status-live">Active</span></td>
+              </tr>
+              <tr>
+                <td>Studio Element</td>
+                <td>Pro</td>
+                <td>$2,890</td>
+                <td class="positive-text">+7.8%</td>
+                <td><span class="status status-pending">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">Create Report</p>
+          <h3>Generate New Insight Pack</h3>
+        </div>
+        <button class="close-modal" id="closeModalBtn">×</button>
+      </div>
+
+      <form class="modal-form">
+        <div class="form-group">
+          <label>Client Name</label>
+          <input type="text" placeholder="Enter client name" />
+        </div>
+
+        <div class="form-group">
+          <label>Report Type</label>
+          <select>
+            <option>Weekly Summary</option>
+            <option>Monthly Analytics</option>
+            <option>Campaign Performance</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea rows="4" placeholder="Add notes or KPI focus..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="ghost-btn" id="cancelModalBtn">Cancel</button>
+          <button type="submit" class="primary-btn">Generate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
