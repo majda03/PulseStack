@@ -904,3 +904,299 @@ textarea:focus {
     height: 115px;
   }
 }
+/* ---------- MOBILE FIX ---------- */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: min(100% - 24px, 100%);
+    margin-inline: auto;
+  }
+
+  .section {
+    padding: 72px 0;
+  }
+
+  .section-head h2,
+  .about-content h2,
+  .contact-text h2,
+  .hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.05;
+    word-break: break-word;
+  }
+
+  .section-sub,
+  .hero-desc,
+  .about-content p,
+  .project-copy p,
+  .contact-text p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .hero-grid,
+  .about-grid,
+  .contact-grid,
+  .stats-grid,
+  .skills-wrap,
+  .services-grid,
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .hero {
+    padding-top: 32px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .hero-mini-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .mini-stat {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .profile-card {
+    max-width: 100%;
+    padding: 18px;
+  }
+
+  .profile-avatar-ring {
+    width: 200px;
+    height: 260px;
+    margin: 0 auto 16px;
+  }
+
+  .profile-content h2 {
+    font-size: 1.05rem;
+  }
+
+  .profile-content p {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .about-circle {
+    min-height: auto;
+    padding: 28px 0;
+  }
+
+  .inner-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .nav {
+    padding: 12px 14px;
+    border-radius: 20px;
+  }
+
+  .nav-links {
+    width: 100%;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .project-card,
+  .project-media {
+    min-height: 320px;
+  }
+
+  .project-overlay {
+    padding: 14px;
+  }
+
+  .project-copy {
+    max-width: 100%;
+  }
+
+  .project-copy h3 {
+    font-size: 1.05rem;
+  }
+
+  .project-copy p {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .project-tags {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .project-tags span {
+    font-size: 0.7rem;
+    padding: 6px 8px;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .project-links a {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    height: 36px;
+    font-size: 0.78rem;
+    padding: 0 10px;
+  }
+
+  .contact-form {
+    padding: 18px;
+  }
+
+  .contact-item {
+    padding: 14px;
+    align-items: flex-start;
+  }
+
+  .footer-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}
+
+/* extra small phones */
+@media (max-width: 480px) {
+  .container {
+    width: min(100% - 18px, 100%);
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .hero h1,
+  .section-head h2,
+  .about-content h2,
+  .contact-text h2 {
+    font-size: clamp(1.8rem, 9vw, 2.45rem);
+  }
+
+  .project-card,
+  .project-media {
+    min-height: 290px;
+    border-radius: 18px;
+  }
+
+  .project-media {
+    border-radius: 18px;
+  }
+
+  .project-overlay {
+    padding: 12px;
+  }
+
+  .project-type {
+    font-size: 0.64rem;
+    padding: 5px 8px;
+  }
+
+  .project-index {
+    font-size: 0.68rem;
+  }
+
+  .project-copy h3 {
+    font-size: 0.98rem;
+    margin-bottom: 6px;
+  }
+
+  .project-copy p {
+    font-size: 0.78rem;
+  }
+
+  .project-links a {
+    height: 34px;
+    font-size: 0.74rem;
+  }
+
+  .profile-avatar-ring {
+    width: 185px;
+    height: 240px;
+  }
+
+  .inner-circle {
+    width: 190px;
+    height: 190px;
+  }
+}
+@media (max-width: 768px) {
+  .dashboard-layout,
+  .dashboard-grid,
+  .analytics-grid,
+  .stats-grid,
+  .main-layout,
+  .hero-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    position: static !important;
+  }
+
+  .topbar,
+  .search-bar,
+  .dashboard-header,
+  .actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .search-bar input,
+  .search-input,
+  .search-box {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .btn,
+  button {
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 8vw, 2.8rem);
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 6vw, 2rem);
+  }
+
+  .card,
+  .panel,
+  .metric-card,
+  .dashboard-card {
+    padding: 16px !important;
+    border-radius: 18px !important;
+  }
+}
