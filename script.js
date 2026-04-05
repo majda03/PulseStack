@@ -30,7 +30,8 @@ const loadingInterval = setInterval(() => {
       loadingScreen.classList.add("hidden");
       animateCounters();
       revealOnScroll();
-      drawChart("30");
+      resizeCanvas();
+      drawChart(currentRange);
     }, 350);
   }
 }, 180);
@@ -38,9 +39,36 @@ const loadingInterval = setInterval(() => {
 /* Sidebar mobile */
 const menuToggle = document.getElementById("menuToggle");
 const sidebar = document.getElementById("sidebar");
+const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+function openSidebar() {
+  sidebar.classList.add("open");
+  sidebarBackdrop.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  sidebarBackdrop.classList.remove("active");
+  document.body.style.overflow = "";
+}
 
 menuToggle?.addEventListener("click", () => {
-  sidebar.classList.toggle("open");
+  if (sidebar.classList.contains("open")) {
+    closeSidebar();
+  } else {
+    openSidebar();
+  }
+});
+
+sidebarBackdrop?.addEventListener("click", closeSidebar);
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 980) {
+    closeSidebar();
+  }
+  resizeCanvas();
+  drawChart(currentRange);
 });
 
 /* Modal */
@@ -117,6 +145,7 @@ function animateCounters() {
 /* Chart */
 const canvas = document.getElementById("lineChart");
 const ctx = canvas.getContext("2d");
+const chartWrap = document.getElementById("chartWrap");
 
 const chartDataSets = {
   "30": {
@@ -136,17 +165,38 @@ const chartDataSets = {
   }
 };
 
+let currentRange = "30";
+
+function resizeCanvas() {
+  if (!chartWrap) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const rect = chartWrap.getBoundingClientRect();
+  const width = Math.max(280, Math.floor(rect.width - 20));
+  const height = window.innerWidth < 680 ? 240 : 320;
+
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+}
+
 function drawChart(range = "30") {
+  currentRange = range;
   const data = chartDataSets[range];
-  const { width, height } = canvas;
+
+  const width = parseFloat(canvas.style.width) || 600;
+  const height = parseFloat(canvas.style.height) || 320;
 
   ctx.clearRect(0, 0, width, height);
 
-  const padding = 40;
+  const padding = window.innerWidth < 680 ? 24 : 40;
   const chartWidth = width - padding * 2;
   const chartHeight = height - padding * 2;
 
-  // Background grid
   ctx.strokeStyle = "rgba(255,255,255,0.06)";
   ctx.lineWidth = 1;
 
@@ -171,39 +221,38 @@ function drawChart(range = "30") {
   const revenuePoints = getPoints(data.revenue);
   const engagementPoints = getPoints(data.engagement);
 
-  drawLine(revenuePoints, "#6d7cff", "rgba(109,124,255,0.16)");
-  drawLine(engagementPoints, "#38d9ff", "rgba(56,217,255,0.12)");
+  drawLine(revenuePoints, "#6d7cff", "rgba(109,124,255,0.16)", width, height);
+  drawLine(engagementPoints, "#38d9ff", "rgba(56,217,255,0.12)", width, height);
 
-  // Labels
   ctx.fillStyle = "rgba(150,160,181,0.9)";
-  ctx.font = "12px Inter";
+  ctx.font = window.innerWidth < 680 ? "11px Inter" : "12px Inter";
 
   data.labels.forEach((label, index) => {
     const x = padding + (chartWidth / (data.labels.length - 1)) * index;
-    ctx.fillText(label, x - 8, height - 12);
+    ctx.fillText(label, x - 8, height - 10);
   });
 
-  // Legend
-  ctx.fillStyle = "#f4f7fb";
-  ctx.font = "600 12px Inter";
+  if (window.innerWidth > 520) {
+    ctx.fillStyle = "#6d7cff";
+    ctx.fillRect(width - 170, 18, 12, 12);
+    ctx.fillStyle = "#f4f7fb";
+    ctx.font = "600 12px Inter";
+    ctx.fillText("Revenue", width - 150, 28);
 
-  ctx.fillStyle = "#6d7cff";
-  ctx.fillRect(width - 170, 18, 12, 12);
-  ctx.fillStyle = "#f4f7fb";
-  ctx.fillText("Revenue", width - 150, 28);
-
-  ctx.fillStyle = "#38d9ff";
-  ctx.fillRect(width - 90, 18, 12, 12);
-  ctx.fillStyle = "#f4f7fb";
-  ctx.fillText("Engagement", width - 70, 28);
+    ctx.fillStyle = "#38d9ff";
+    ctx.fillRect(width - 90, 18, 12, 12);
+    ctx.fillStyle = "#f4f7fb";
+    ctx.fillText("Engagement", width - 70, 28);
+  }
 }
 
-function drawLine(points, strokeColor, fillColor) {
+function drawLine(points, strokeColor, fillColor, width, height) {
   if (!points.length) return;
 
-  // Area fill
+  const bottomY = height - (window.innerWidth < 680 ? 24 : 40);
+
   ctx.beginPath();
-  ctx.moveTo(points[0].x, canvas.height - 40);
+  ctx.moveTo(points[0].x, bottomY);
 
   points.forEach((point, index) => {
     if (index === 0) {
@@ -216,17 +265,16 @@ function drawLine(points, strokeColor, fillColor) {
   });
 
   const last = points[points.length - 1];
-  ctx.lineTo(last.x, canvas.height - 40);
+  ctx.lineTo(last.x, bottomY);
   ctx.closePath();
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  const gradient = ctx.createLinearGradient(0, 0, 0, height);
   gradient.addColorStop(0, fillColor);
   gradient.addColorStop(1, "rgba(255,255,255,0)");
 
   ctx.fillStyle = gradient;
   ctx.fill();
 
-  // Line
   ctx.beginPath();
   ctx.moveTo(points[0].x, points[0].y);
 
@@ -241,7 +289,6 @@ function drawLine(points, strokeColor, fillColor) {
   ctx.lineWidth = 3;
   ctx.stroke();
 
-  // Dots
   points.forEach((point) => {
     ctx.beginPath();
     ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
@@ -250,7 +297,7 @@ function drawLine(points, strokeColor, fillColor) {
 
     ctx.beginPath();
     ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
-    ctx.fillStyle = strokeColor + "20";
+    ctx.fillStyle = `${strokeColor}20`;
     ctx.fill();
   });
 }
@@ -266,7 +313,9 @@ rangeButtons.forEach((button) => {
   });
 });
 
-/* Initial reveal fallback */
+/* Initial */
 window.addEventListener("load", () => {
   revealOnScroll();
+  resizeCanvas();
+  drawChart(currentRange);
 });
