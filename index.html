@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>PulseStack Analytics Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +23,8 @@
     </div>
   </div>
 
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
@@ -34,24 +36,12 @@
       </div>
 
       <nav class="nav">
-        <button class="nav-link active">
-          <span>Dashboard</span>
-        </button>
-        <button class="nav-link">
-          <span>Campaigns</span>
-        </button>
-        <button class="nav-link">
-          <span>Audience</span>
-        </button>
-        <button class="nav-link">
-          <span>Reports</span>
-        </button>
-        <button class="nav-link">
-          <span>Automations</span>
-        </button>
-        <button class="nav-link">
-          <span>Settings</span>
-        </button>
+        <button class="nav-link active"><span>Dashboard</span></button>
+        <button class="nav-link"><span>Campaigns</span></button>
+        <button class="nav-link"><span>Audience</span></button>
+        <button class="nav-link"><span>Reports</span></button>
+        <button class="nav-link"><span>Automations</span></button>
+        <button class="nav-link"><span>Settings</span></button>
       </nav>
 
       <div class="sidebar-card">
@@ -67,7 +57,7 @@
     <main class="main-content">
       <header class="topbar">
         <div class="topbar-left">
-          <button class="menu-toggle" id="menuToggle">☰</button>
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
           <div>
             <p class="eyebrow">Portfolio Case Study</p>
             <h1>Analytics Dashboard</h1>
@@ -162,8 +152,8 @@
             </div>
           </div>
 
-          <div class="chart-wrap">
-            <canvas id="lineChart" width="900" height="320"></canvas>
+          <div class="chart-wrap" id="chartWrap">
+            <canvas id="lineChart"></canvas>
           </div>
         </article>
 
